@@ -1,0 +1,21 @@
+trigger: none
+pr:
+  branches:
+    include:
+    - master
+
+jobs:
+- job: Unit_Tests_On_PowerShell_Ubuntu
+  displayName: 'Unit Tests on PowerShell, Ubuntu'
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Run Unit Tests'
+    inputs:
+      pwsh: true
+      targetType: Inline
+      script: ./azure-pipelines/Invoke-RunTests.ps1
+    env:
+      LocalPath: $(Build.Repository.LocalPath)
+      JobName: $(Agent.JobName)
